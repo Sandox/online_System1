@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en-US" ng-app="myApp">
+    <head>
+        <title>Add-Product</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+         <script src="./js/customerController.js"></script>
+        <script src="./js/productController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/mycss.css" />
+        <link rel="stylesheet" type="text/css" href="./css/menus.css" />
+    </head>
+    
+        <body  ng-controller="AddProductController">
+           
+            <div class="container" >
+               <ul style="background-color:#4CAF50;">
+                    <li><a href="#home">Admin Panel{{users.fname}} {{users.lname}}</a></li>
+                    <li><a href="./adminHomePage.html">Admin Home</a></li>
+                    <li><a href="./addCategory.html">Add Category</a></li>
+                    <li><a href="./updateProduct.html">Update Product</a></li>
+                    <li><a href="./viewOrders.html">View Orders</a></li>
+                     <li><a href="./login.html">Log Out</a></li>
+                </ul>
+                
+                <div id="container_demo" >
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <div id="wrapper">
+                    <form name="addproduct"> 
+                        <img src="./css/pick.png" style="width:150;height:50; " />
+                              <p> 
+                                    <label for="pName" class="pName" >Product Name:</label>
+                                    <input id="pName" ng-model="name" name="pName" required="required" type="text" />
+                                </p>
+                              
+                               <p> 
+                                    <label for="pCat" class="pCat"  > Product Category:</label>
+                                    <select name="pCat" id="pCat" ng-model="category">
+                                        <option ng-repeat="cateo in categories" value="{{cateo.name}}">{{cateo.name}} </option>
+                                    </select>
+                               </p>    
+                                 
+                                <p> 
+                                    <label for="productPrice" class="yourPrice" >Product Price: </label>
+                                    <input id="productPrice" ng-model="price" name="productPrice" required="required" type="text" />
+                                </p>
+                                
+                                 <p> 
+                                    <label for="productImage" class="productImage" >Product Image: </label>
+                                    <input id="productImage" ng-model="image"  required="required" type="file" accept="image/png/jpeg" />
+                                </p>
+                              
+                                    <input type="submit" ng-click="create()" value="Save Product" style=" color:#008000; width: 250px; height: 30px;font-size: 15px;"/> 
+				
+   
+                     </form>
+               </div>  
+          </div>
+        </div>
+    </body>
+</html>

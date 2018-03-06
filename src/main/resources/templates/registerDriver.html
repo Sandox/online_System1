@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="myApp">
+    <head>
+        <title> Driver Register</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+         <script src="./js/customerController.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/mycss.css" />
+        <link rel="stylesheet" type="text/css" href="./css/menus.css" />
+    </head>
+    
+        <body  ng-controller="RegisterController">
+           
+           
+                
+                <div id="container_demo" >
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <div id="wrapper">
+                    
+                  
+                        
+                                <p> 
+                                    <label for="firstName" class="fName" >First Name:</label>
+                                    <input id="firstName" ng-model="fname" name="firstName" required="required" type="text" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="lastName" class="lName" > Last Name:</label>
+                                    <input id="lastName" ng-model="lname" name="lastName" required="required" type="text" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="emailsignup" class="youmail"  >Email Address:</label>
+                                    <input id="emailsignup" ng-model="email" name="emailsignup" type="email" /> 
+                                </p>
+                                
+                                <p> 
+                                    <label for="cellNo" class="yourCell" >cell Number: </label>
+                                    <input id="cellNo" ng-model="mobileNo" name="cellNo" required="required" type="text" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="passwordsignup" class="youpasswd" > Your password: </label>
+                                    <input id="passwordsignup" ng-model="password" name="passwordsignup" required="required" type="password" />
+                                </p>
+                                
+                               
+                                    <input type="submit" ng-click="registerUsers('2')" value="Sign up" style=" color:#008000; width: 250px; height: 30px;font-size: 15px; " /> 
+				
+                   
+               </div>  
+          </div>
+       
+    </body>
+</html>

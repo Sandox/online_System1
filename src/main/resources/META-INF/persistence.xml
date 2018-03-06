@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.sandile_picknpay_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>model.Tblproduct</class>
+    <class>model.Tbluser</class>
+    <class>com.sandile.picknpay.model.Delivery</class>
+    <class>com.sandile.picknpay.model.Orderinformation</class>
+    <class>com.sandile.picknpay.model.Bank</class>
+    <class>com.sandile.picknpay.model.Users</class>
+    <class>com.sandile.picknpay.model.Category</class>
+    <class>com.sandile.picknpay.model.Banking</class>
+    <class>com.sandile.picknpay.model.Provinces</class>
+    <class>com.sandile.picknpay.model.Address</class>
+    <class>com.sandile.picknpay.model.Orders</class>
+    <class>com.sandile.picknpay.model.Shipping</class>
+    <class>com.sandile.picknpay.model.Product</class>
+    <class>com.sandile.picknpay.model.Location</class>
+    <class>com.sandile.picknpay.model.Orderstatus</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/PicknPayDB?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="sandile"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

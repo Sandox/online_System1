@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html vlang="en-US" ng-app="myApp" >
+    <head>
+        <title>Login to Pick n Pay Online </title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+         <script src="./js/customerController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/mycss.css" />
+    </head>
+
+    <body ng-controller="LoginController">
+        
+            <div class="container">
+            <div id="container_demo" >
+                <a class="hiddenanchor" id="toregister"></a>
+                <div id="wrapper">
+                    <form class="login"  method="post" autocomplete="on"> 
+                        <h1>Login to Pick n Pay</h1> 
+                        
+       
+                                <p> 
+                                <label for="username" class="uname"  > Please Enter Your Email Address: </label>
+                                <input id="username" name="username" ng-model="username" required="required" type="text" placeholder=""/>
+                                </p>
+                            
+                                <p> 
+                                <label for="password" class="passWrd" > Please Enter Your Password: </label>
+                                <input id="password" name="password" ng-model="password" required="required" type="password" placeholder=""/>
+                                </p>
+                                
+                                <p class="keeplogin"> 
+				<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+				<label for="loginkeeping">Stay logged in</label>
+			        </p>
+                                
+                               
+                               <input type="submit" ng-click="login()" value="Login" style=" color:#008000; width: 250px; height: 30px;font-size: 15px; " />         
+                                    
+                               <ul>
+                                <li><a href="forgotPassword.html" >Forgot Password</a></li>
+                                <li><a href="register.html" >Not Registered?</a></li>
+                               </ul>
+                           
+			   
+                                    
+				
+                    </form> 
+                </div>
+            </div>   
+       
+        </div>
+    </body>
+</html>
+

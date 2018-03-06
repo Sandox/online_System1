@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+    <head>
+        <title>Customer-Home</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+         <script src="./js/customerController.js"></script>
+        <script src="./js/productController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/menus.css" />
+        <link rel="stylesheet" type="text/css" href="./css/stylingTable.css" />
+        <link rel="stylesheet" type="text/css" href="./css/models.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>           
+    
+        <script>
+        $(document).ready(function(){
+            $("#myBtn").click(function(){
+                $("#myModal").modal();
+            });
+        });
+
+         $(document).ready(function(){
+            $("#myBtnDelivary").click(function(){
+                $("#myModalDelivary").modal();
+            });
+
+        });
+             $(document).ready(function(){
+            $("#myBtnBank").click(function(){
+                $("#myModalBank").modal();
+            });
+        });
+    </script>
+     
+    </head>
+
+    <body ng-controller="CustomerController">
+        <div>
+  
+            <ul style="background-color:#4CAF50;">
+               <li><a href="#home">Customer Site: {{users.name}} {{users.surname}}</a></li>
+               <li><a href="./customerOrders.html">Track Order</a></li>
+               <li><a href="./login.html">Log Out</a></li>
+            </ul>
+  
+
+           <div class ="tab"> 
+                     <button class="tablinks"  ng-click="searchCategory(event,catss.name)" ng-repeat="catss in categories"> {{catss.name}} </button>
+            </div>   
+           
+           <button type="button" class="btn btn-default btn-sm" style="float:right;"  id='myBtn'>
+                 <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart: {{cartItems.length}}  R: {{CartAmount}}
+            </button>
+           
+       <div ng-repeat="cateo in category" id="{{cateo.name}}" class="tabcontent">    
+              
+            <table id="table">
+                 <tr>
+                       <th>Product Image</th>
+                       <th>Product Name</th>
+                       <th>Product Price</th>
+               
+                  </tr>
+
+                   <tr>
+                       <td><span><img ng-src="{{cateo.image}}" width="100" height="50" alt=""/></span></td>
+                       <td>{{cateo.name}}</td>
+                       <td> R:{{cateo.price}}</td>
+                       <td>
+                            <input type="button" id="add" value="Add To Cart"  class="add" ng-click="addToCart(product)"/> 
+                      </td>
+                   </tr>
+           </table>
+  
+                
+           </div>
+            
+            
+          <!--Product Table for adding to cart -->  
+           
+              
+           <div class="container">
+                  <div class="product-block" ng-repeat="prod in products" style="width:250px; height: 340px;font-weight: bold;color: #004579">
+                    <div class="card text-xs-center">  <img ng-src="{{prod.image}}" style="width:120px; height: 150px;"/>
+                         <h5 class="card-title" > {{prod.name}}</h5>
+                        <p class="card-text price" style="font-weight: bold">{{prod.price | currency : "R"}}</p>
+                        
+                         <button type="submit" class="btn btn-basic" ng-click="addToCart(prod)()"  style="font-size: 12px;width: 150px;">Add To Cart</button>
+                    </div>
+            </div>
+      </div>
+            
+            
+        </div>
+       
+        
+        // <!--Form that fades out after you add to cart -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                        <button type="button" class="btn btn-default btn-sm pull-left" style="float:right;"  id='myBtn'>
+                             <span class="glyphicon glyphicon-shopping-cart "></span> Cart items: {{cartItems.length}}  Total R: {{CartAmount}}
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding:40px 70px;">
+                        
+                         <p> Order Items</p>
+                         
+                         <table id="tblCart" class="table table-striped">
+                            <tr>
+                                 <th>Product Image</th>
+                                 <th> Product Name</th>
+                                 <th> Product Price</th>
+                                 <th> Product Quantity</th>
+                                 <th> Product Cost</th>
+                                 
+                            </tr>
+
+                            <tr ng-repeat="ite in cartItems" >
+                                <td><span><img ng-src="{{ite.image}}" width="100" height="50" alt=""/></span></td>
+                                <td>{{ite.name}}</td>
+                                <td> R:{{ite.price}}</td>
+                                
+                            
+                               <td>
+                                    <input type="button" value="+" ng-click="increaseItemCount(items,quantity)"/>
+                                     <input type="number" name="quantity" ng-model="quantity" value="{{items.quantity}}" min="1" max="15" style="width: 5em;"/>
+                                     <input type="button" value="-" ng-click="decreaseItemCount(items,quantity)"/>
+                               </td>
+                                
+                                <td>
+                                    <input type="number" name="totalAmount" ng-model="totalAmount" value="{{items.totalAmount}}" style="width: 5em;" ng-disabled="true"/>
+                                 </td>
+                                 
+                                <td>
+                                    <input type="button" value="Remove" ng-click="removeCartItem()"/>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                      
+                  
+                    <div class="modal-footer">
+                        
+                        <p class="change_link">  
+                           <a class="login pull-left" data-dismiss="modal"> Continue Shopping </a>
+                         </p>
+                         
+                         <button type="submit" id="myBtnDelivary" class="btn btn-danger btn-default pull-middle" data-dismiss="modal" onclick="">Order Products</button>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="myModalDelivary">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="btn btn-default btn-sm pull-left" style="float:right;"  id='myBtn'>
+                             <span class="glyphicon glyphicon-shopping-cart "></span> Cart items: {{cartItems.length}}  Total R: {{CartAmount}}
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding:40px 70px;">
+                        
+                         <p> Delivery Address Information</p>
+                                
+                               <p>   
+                                    <label for="date" class="date" data-icon="u">Select Delivery Date:</label>
+                                    <input id="date" type="date" value="2017-06-01" ng-model="date"/> 
+                               </p> 
+                         
+                                <p> 
+                                    <label for="addressType" class="addressType"> Address Type: </label>
+                                    <select name="addressType" id="addressType" ng-model="addressType">
+                                        <option ng-repeat="addressType in addressTypes" value="{{addressType.name}}">{{addressType.name}} </option>
+                                    </select>
+                               </p>  
+                             
+                                <p> 
+                                    <label for="firstName" class="fName" data-icon="u">First Name:</label>
+                                    <input id="firstName" ng-model="name" name="firstName" required="required" type="text" placeholder="Enter First Name" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="lastName" class="lName" data-icon="u">Last Name:</label>
+                                    <input id="lastName" ng-model="surname" name="lastName" required="required" type="text" placeholder="Enter Last Name" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="emailsignup" class="youmail" data-icon="e" > Email Address:</label>
+                                    <input id="emailsignup" ng-model="email" name="emailsignup" required="required" type="email" placeholder="email@gmail.com"/> 
+                                </p>
+                                
+                                <p> 
+                                    <label for="cellNo" class="yourCell" data-icon="u">cell Number: </label>
+                                    <input id="cellNo" ng-model="contacts" name="cellNo" required="required" type="text" placeholder="Enter Mobile No"/>
+                                </p>
+                                
+                                <p> 
+                                    <label for="StreetName" class="StreetName" data-icon="u">Street Name: </label>
+                                    <input id="StreetName" ng-model="street" name="StreetName" required="required" type="text" placeholder="Enter Street Name"/>
+                                </p>
+                                
+                                <p> 
+                                    <label for="city" class="city" data-icon="u">City: </label>
+                                    <input id="city" ng-model="city" name="city" required="required" type="text" placeholder="Enter city"/>
+                                </p>
+                                
+                                <p> 
+                                    <label for="dProvince" class="dProvince"  > Province: </label>
+                                    <select name="dProvince" id="dProvince" ng-model="provinceName">
+                                        <option ng-repeat="province in provinces" value="{{province.name}}">{{province.name}} </option>
+                                    </select>
+                               </p> 
+                               
+                                
+                     </div>
+                    
+                    <div class="modal-footer">
+                        <p class="change_link">  
+                           <a class="login pull-left" data-dismiss="modal"> Continue Shopping </a>
+                         </p>
+                         
+                        <button type="submit" id="myBtnBank" class="btn btn-danger btn-default pull-middle" data-dismiss="modal"  ng-click="payement()" >Make Payment</button>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="myModalBank">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="btn btn-default btn-sm pull-left" style="float:right;"  id='myBtn'>
+                             <span class="glyphicon glyphicon-shopping-cart "></span> Cart items: {{cartItems.length}}  Total R: {{CartAmount}}
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding:40px 70px;">
+                        
+                         <p>MAKE PAYMENTS</p>
+                         <p> 
+                                    <label for="dProvince" class="dProvince"  > Bank Name: </label>
+                                    <select name="dProvince" id="dProvince" ng-model="bankName">
+                                        <option ng-repeat="banking in bankNames" value="{{banking.name}}">{{banking.name}} </option>
+                                    </select>
+                         </p> 
+                            
+                         <p> 
+                                <label for="cardNo" class="cardNo" data-icon="u">Card Number: </label>
+                                <input id="cardNo" ng-model="cardNo" name="cardNo" required="required" type="text" placeholder="Enter Card Number"/>
+                         </p>
+                                
+                         <p> 
+                                <label for="cardHolder" class="cardHolder" data-icon="u">Card Holder: </label>
+                                <input id="cardHolder" ng-model="cardHolder" name="cardHolder" required="required" type="text" placeholder="Enter Card Holder"/>
+                         </p>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <p class="change_link">  
+                           <a class="login pull-left" data-dismiss="modal"> Continue Shopping </a>
+                        </p>
+                         
+                        <button type="submit" class="btn btn-danger btn-default pull-middle" data-dismiss="modal" ng-click="payement()">Place An Order</button>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+    
+

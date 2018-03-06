@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en-US" ng-app="myApp">
+    <head>
+        <title>Register</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+         <script src="./js/customerController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/mycss.css" />
+        
+    </head>
+    
+        <body  ng-controller="RegisterController">
+          
+        <div class="container" >
+
+            <header>
+                <h1>Pick n Pay Online Registration </h1>		
+            </header>
+            	
+            
+                <div id="container_demo" >
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <div id="wrapper">
+                    <form name="register"> 
+                        <img src="./css/pick.png" style="width:200; height:100; " />
+                         
+                                <p> 
+                                    <label for="firstName" class="myName" >Please Enter Your Name:</label>
+                                    <input id="firstName" ng-model="myname" name="firstName" required="required" type="text" placeholder="" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="lastName" class="lastName" >Please Enter Your Surname:</label>
+                                    <input id="lastName" ng-model="lastname" name="lastName" required="required" type="text" placeholder="" />
+                                </p>
+                                
+                                <p> 
+                                    <label for="emailsignup" class="email" > Please Enter Your Email Address:</label>
+                                    <input id="emailsignup" ng-model="email" name="emailsignup"  type="email" placeholder=""/> 
+                                </p>
+                                
+                                <p> 
+                                    <label for="cellNo" class="cellphone" >Please Enter Your Cell Number: </label>
+                                    <input id="cellNo" ng-model="cellphone" name="cellNo" required="required" type="text" placeholder=""/>
+                                </p>
+                                
+                                <p> 
+                                    <label for="passwordsignup" class="youpasswd">Please Enter Your password: </label>
+                                    <input id="passwordsignup" ng-model="password" name="passwordsignup" required="required" type="password" placeholder=""/>
+                                </p>
+                                
+                                
+                                    <input type="submit" ng-click="registerUsers('0')" value="Sign up" style=" color:#004579;width: 350px;height: 30px;font-size: 15px; "/> 
+				
+                                  
+				<a href="./login.html" style=" color:#004579;">Login Here </a>
+                              
+                               
+                            </form>
+                        
+                </div>  
+          </div>
+        </div>
+    </body>
+</html>

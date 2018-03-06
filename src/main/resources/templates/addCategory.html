@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en-US" ng-app="myApp">
+    <head>
+        <title>Add-Category</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+	<script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+        <script src="./js/customerController.js"></script>
+         <script src="./js/productController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/mycss.css" />
+        <link rel="stylesheet" type="text/css" href="./css/menus.css" />
+    </head>
+    
+        <body  ng-controller="CategoryController">
+           
+            <div class="container" >
+               <ul style="background-color:#4CAF50;">
+                    <li><a href="#home">{{users.fname}} {{users.lname}}</a></li>
+                    <li><a href="./adminHomePage.html">Admin Home Page</a></li>
+                    <li><a href="./addProduct.html">Admin Add Product</a></li>
+                    <li><a href="./viewOrders.html">Admin View Orders</a></li>
+                    <li><a href="./login.html">Log Out</a></li>
+                </ul>
+                
+                <div id="container_demo" >
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <div id="wrapper">
+                    <form name="addCat"> 
+                        <img src="./css/pick.png" style="width:150;height:50; " />
+                        
+                           
+                                <p> 
+                                    <label for="cName" class="pName" >Category Name:</label>
+                                    <input id="cName" ng-model="name" name="cName" required="required" type="text" />
+                                </p>
+ 
+                                 
+                                    <input type="submit" ng-click="saveCategory()" value="Save Category" style=" color:#60DE2A;"/> 
+				
+                                    <input type="submit" ng-click="removeCategory()" value="Remove Category" style=" color:#CA164C;"/> 
+				
+   
+                     </form>
+               </div>  
+          </div>
+        </div>
+    </body>
+</html>

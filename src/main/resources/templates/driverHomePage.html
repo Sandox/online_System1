@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html vlang="en-US" ng-app="myApp">
+    <head>
+        <title>Drivers Panel</title>
+        <script src="./js/angular.js"></script>
+        <script type="text/javascript" src="./js/angular-route.min.js"></script>
+        <script src="./js/app.js"></script>
+        <script src="./js/adminController.js"></script>
+         <script src="./js/customerController.js"></script>
+        <script src="./js/productController.js"></script>
+        <script src="./js/routemapping.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./css/menus.css" />
+        <link rel="stylesheet" type="text/css" href="./css/stylingTable.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>       
+
+        
+        <style> 
+        
+            li a:hover {
+                        background-color: #bfe7ef;
+                       }
+
+        </style>
+    </head>
+
+    <body ng-controller="ProductController">
+    
+  
+        <ul style=" background-color:#4CAF50;">
+               <li><a href="#home">{{user.name}} {{user.surname}}</a></li>
+                <li><a href="./viewOrders.html">Deliver Orders</a></li>
+               <li><a href="./login.html">Log Out</a></li>
+        </ul>
+  
+          
+            
+        
+       
+
+    </body>
+</html>

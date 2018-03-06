@@ -1,0 +1,22 @@
+#table {
+    font-family: "Times New Roman", Times, serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table td, #tblth {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #69a6af;}
+
+#table tr:hover {background-color: #db839c;}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #c9efbf;
+    color: white;
+}
