@@ -37,7 +37,15 @@ picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvi
    }).when('/customerOrders',{
        templateUrl :'/customerOrders.html',
        controller : 'OrderController'
-   }).otherwise({
+   })
+     .when('/registerSupplier',{
+       templateUrl :'/registerSupplier.html',
+       controller : 'RegisterController'
+   }).when('/registerDriver',{
+       templateUrl :'/registerDriver.html',
+       controller : 'RegisterController'
+   })
+   .otherwise({
        redirectTo :'/'
     });
 }]);

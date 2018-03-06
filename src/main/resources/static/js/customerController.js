@@ -6,9 +6,9 @@ picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvi
 // Customer Controller 
 picknpaySystem.controller("CustomerController", function ($scope, $http){
    $http.defaults.headers.post["Content-Type"] = "application/json";  
-    var Data = {};
-    window.location.search.replace(/\?/,'').split('&').map(function(o){ Data[o.split('=')[0]]= o.split('=')[1];});
-    var userId = Data.userId;
+    var cusData = {};
+    window.location.search.replace(/\?/,'').split('&').map(function(o){ cusData[o.split('=')[0]]= o.split('=')[1];});
+    var userId = cusData.userId;
     
     //$http.get Requests data from all users in the database
     $http.get('/user/findUserByUserId/' + userId + '').then(function (response) {
@@ -31,14 +31,14 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
              $http.get('/category/findAllCategories/' + catName + '').then(function(response){
                  
                 $scope.category = response.data;
-                 var i, tabcontent, tablinks;
+                 var x, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
+                for (x = 0; x < tabcontent.length; x++) {
+                    tabcontent[x].style.display = "none";
                 }
                 tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace("active", "");
+                for (x = 0; x < tablinks.length; x++) {
+                    tablinks[x].className = tablinks[x].className.replace("active", "");
                 }
                 document.getElementById(catName).style.display = "block";
                 evnt.currentTarget.className += " active";

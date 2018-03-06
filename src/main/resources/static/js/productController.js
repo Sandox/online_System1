@@ -7,9 +7,9 @@ picknpaySystem.controller("ProductController",function($scope,$http){
    
     $http.defaults.headers.post["Content-Type"] = "application/json";  
 
-    var Data = {};
-    window.location.search.replace(/\?/,'').split('&').map(function(o){ Data[o.split('=')[0]]= o.split('=')[1];});
-    var userId = Data.userId;
+    var info = {};
+    window.location.search.replace(/\?/,'').split('&').map(function(o){ info[o.split('=')[0]]= o.split('=')[1];});
+    var userId = info.userId;
    
     $http.get('/user/findUserByUserId/' + userId + '').then(function (response) {
         $scope.user = response.data;
@@ -25,7 +25,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
         $scope.categories = response.data;
        });
         
-   
+     // Method to deletes the product using the productID
         $scope.deleteProduct = function (productId)
         {
            
@@ -38,8 +38,8 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                 alert(error.data.message);
             }); 
         };
-        // Find Product based on a Product ID  
         
+        // Find Product based on a Product ID  
         $scope.findProductById = function (productId)
         {
            $http.get('/product/findProductById/' + productId + '').then(function (response) {
@@ -52,15 +52,15 @@ picknpaySystem.controller("ProductController",function($scope,$http){
          // Update Products name or category type and price by retrieving the ProductID 
         $scope.editProduct = function (productId)
         {
-            var name = $scope.product.name;
-            var cat = $scope.product.category;
-            var price = $scope.product.price;
+            var prodname = $scope.product.name;
+            var prodcategory = $scope.product.category;
+            var prodprice = $scope.product.price;
                         
-            if(name !== undefined)
+            if(prodname !== undefined)
             {
-                if( price !== undefined){
+                if( prodprice !== undefined){
                     
-                    $http.put('/product/updateProduct/' + productId + '/' + name + '/' + cat + '/'+price+'').then(function(response){
+                    $http.put('/product/updateProduct/' + productId + '/' + prodname + '/' + prodcategory + '/'+prodprice+'').then(function(response){
             
                         if(response.data !== 0)
                         {
@@ -102,15 +102,15 @@ picknpaySystem.controller("AddProductController",function($scope,$http){
 
 		        if (files && file) {
 		           
-		            var reader = new FileReader();
-		            reader.onload = function (readerEvt) {
+		            var fleRead = new FileReader();
+		            fleRead.onload = function (readerEvt) {
 		                var binaryString = readerEvt.target.result;
 		                imageCopy = btoa(binaryString);
 		                image = 'data:image/octet-stream;base64,' + imageCopy;
 		                $scope.image = image;
 		             };
 
-		            reader.readAsBinaryString(file);
+		            fleRead.readAsBinaryString(file);
 		        }
 		    };
 
@@ -120,42 +120,42 @@ picknpaySystem.controller("AddProductController",function($scope,$http){
 		        alert('The File APIs are not fully supported in this browser.');
 		    }
       
-      
+      //method for creating the product
         $scope.create = function ()
         {
-            var product = {
-                        name :$scope.name,
-                        category : $scope.category,
-                        price : $scope.price,
+            var myproduct = {
+                        prodname :$scope.name,
+                        prodcategory : $scope.category,
+                        prodprice : $scope.price,
                         image : $scope.image
                   };
          
-         if(product.name !== undefined)
-         {
-             if(product.price !== undefined)
+if(myproduct.prodname !== undefined)
+{
+if(myproduct.prodprice !== undefined)
+ {
+   if(myproduct.prodcategory !== undefined)
+           {
+           $http.post('/product/saveProduct',myproduct).then(function(response){
+
+             if(response.data.pID !== 0)
             {
-               if(product.category !== undefined)
-                    {
-                       $http.post('/product/saveProduct',product).then(function(response){
+           alert("Product is successfully added Added...");
+        }
+     }).catch(function(error){
+   alert(error.data.message);
+ });
+  // expectations for creating the new product
+    }else{
+   alert("Select Product Category...");
+    }
+    }else{
+   alert("Enter Product Price...");
+ }
 
-                            if(response.data.pID !== 0)
-                            {
-                                alert("Product Added...");
-                            }
-                            }).catch(function(error){
-                               alert(error.data.message);
-                            });
-
-                        }else{
-                            alert("Select Product Category...");
-                        }
-                }else{
-                alert("Enter Product Price...");
-            }
-
-         }else{
-             alert("Enter Product Name...");
-         }
+}else{
+  alert("Enter Product Name...");
+ }
   };   
 });
 
