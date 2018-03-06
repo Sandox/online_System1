@@ -19,6 +19,7 @@ public class OrderStatusController {
     
     
     @RequestMapping(method = RequestMethod.GET, value = "/findAllOrderStatus")
+    //spring will try and convert view order status and return the value and try it to the http response automatically 
     @ResponseBody
     public Object viewOrderStatus()
     {

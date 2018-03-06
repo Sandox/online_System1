@@ -89,4 +89,29 @@ public class HomeController {
     {
         return "customerOrders";
     }
+    
+    //mapping for adding supplier and driver
+       @RequestMapping(value = "/registerSupplier", method = RequestMethod.GET)
+    public String registerSupplier()
+    {
+        return "registerSupplier";
+    }
+    
+    @RequestMapping(value = "/registerDriver", method = RequestMethod.GET)
+    public String registerDreiver()
+    {
+        return "registerDriver";
+    }
+    
+    @RequestMapping(value = "/driverHomePage", method = RequestMethod.GET)
+    public String driverHomePage()
+    {
+        return "driverHomePage";
+    }
+    
+    @RequestMapping(value = "/supplierHomePage", method = RequestMethod.GET)
+    public String supplierHomePage()
+    {
+        return "supplierHomePage";
+    }
 }

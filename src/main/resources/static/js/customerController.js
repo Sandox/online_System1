@@ -1,5 +1,5 @@
 var picknpaySystem = angular.module("myApp",['ngRoute']);
-picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvider) {
+picknpaySystem.config(["$routeProvider",function($routeProvider) {
 
 }]);
 
@@ -11,26 +11,26 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
     var userId = cusData.userId;
     
     //$http.get Requests data from all users in the database
-    $http.get('/user/findUserByUserId/' + userId + '').then(function (response) {
-        $scope.users = response.data;
+    $http.get('/user/findUserByUserId/' + userId + '').then(function (dolist) {
+        $scope.users = dolist.data;
         
         });
         
         //$http.get Requests data from categories in the database
-    $http.get('/category/findAllCategories').then(function (response) {
-        $scope.categories = response.data;
+    $http.get('/category/findAllCategories').then(function (dolist) {
+        $scope.categories = dolist.data;
         });
         
 
-         $http.get('/product/findAllProducts').then(function(response){
-            $scope.products = response.data;
+         $http.get('/product/findAllProducts').then(function(dolist){
+            $scope.products = dolist.data;
 	 });
    
          // uses the search function to search for categories 
-      $scope.searchCategory = function(evnt, catName){
-             $http.get('/category/findAllCategories/' + catName + '').then(function(response){
+      $scope.searchCategory = function(evnt, categoryName){
+             $http.get('/category/findAllCategories/' + categoryName + '').then(function(dolist){
                  
-                $scope.category = response.data;
+                $scope.category = dolist.data;
                  var x, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
                 for (x = 0; x < tabcontent.length; x++) {
@@ -40,7 +40,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                 for (x = 0; x < tablinks.length; x++) {
                     tablinks[x].className = tablinks[x].className.replace("active", "");
                 }
-                document.getElementById(catName).style.display = "block";
+                document.getElementById(categoryName).style.display = "block";
                 evnt.currentTarget.className += " active";
              });
            };
@@ -48,25 +48,25 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
        // Add Product To Cart  
        $scope.cartItems = [];
        $scope.CartAmount = 0.0;
-       $scope.addToCart = function(products)
+       $scope.addToCart = function(myproduct)
        {
-          var checkProducts = checkProductsInCart(products.productID);
-          if(checkProducts === null)
+          var checking = checkProductsInCart(myproduct.productID);
+          if(checking === null)
            {
-               amount = 1 * products.price;
+               amount = 1 * myproduct.price;
             
-                $scope.cartItems.push({ name : products.name, 
+                $scope.cartItems.push({ name : myproduct.name, 
                 quantity: 1, 
-                productId : products.productID, 
-                price : products.price,
-                category : products.category,
-                image: products.image,
+                productId : myproduct.productID, 
+                price : myproduct.price,
+                category : myproduct.category,
+                image: myproduct.image,
                 totalAmount: amount
             });
             
           }else
           {
-            checkProducts.quantity++;
+            checking.quantity++;
             var totalAmount = 0.0;
             for(var x = 0; x < $scope.cartItems.length; x++)
             {
@@ -74,7 +74,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                 totalAmount = amount;
              }
             
-            checkProducts.totalAmount = totalAmount;
+            checking.totalAmount = totalAmount;
           }
             
             var totalAmount = 0.0;

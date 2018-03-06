@@ -1,7 +1,9 @@
 var picknpaySystem = angular.module("myApp",['ngRoute']);
-picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvider) {
+picknpaySystem.config(["$routeProvider",function($routeProvider) {
   $routeProvider
+  //this is the request-mapping from the HomeController 
     .when('/login', {
+        // this is the name of the login page in the templates folder 
        templateUrl :'/login.html',
        controller : 'LoginController'
    }).when('/register',{
@@ -34,7 +36,8 @@ picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvi
    }).when('/customerHomePage',{
        templateUrl :'/customerHomePage.html',
        controller : 'CustomerController'
-   }).when('/customerOrders',{
+   })
+      .when('/customerOrders',{
        templateUrl :'/customerOrders.html',
        controller : 'OrderController'
    })
