@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+ //Special controller that does nothing more than adding the @Controller and @ResponseBody annotations
 @RestController
 @RequestMapping(value = "/category")
 public class CategoryController{
@@ -22,6 +22,7 @@ public class CategoryController{
     
     
     @RequestMapping(value = "/findAllCategories", method = RequestMethod.GET)
+//tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
     @ResponseBody
     public Object getAllRep()
     {

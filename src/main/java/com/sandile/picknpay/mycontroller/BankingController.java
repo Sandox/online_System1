@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+// has the capablity of handling multiple HTTP requests throughout the lifecycle of an application. 
 @Controller
 @RequestMapping(value = "/bankNames")
 public class BankingController {
     
+    //You use @Autowired annotation on properties to get rid of the setter methods.
     @Autowired
     private BankingService bank;
     
     
-   
+   //@RequestMapping ensures that HTTP requests to /findAllBankNames are mapped to the findAllBankNames() method.
     @RequestMapping(value = "/findAllBankNames", method = RequestMethod.GET)
     @ResponseBody
     public Object findAllBankNames()

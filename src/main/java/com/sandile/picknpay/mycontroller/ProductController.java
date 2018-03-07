@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.sandile.picknpay.mycontroller;
 
 import com.sandile.picknpay.errorexceptions.DataNotFoundException;
@@ -17,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author User
- */
 
+//Special controller that does nothing more than adding the @Controller and @ResponseBody annotations
 @RestController
 @RequestMapping(value = "/product")
 public class ProductController{
@@ -31,6 +24,7 @@ public class ProductController{
     
      //Fetch all the products that are avialble 
     @RequestMapping(value = "/findAllProducts" , method = RequestMethod.GET)
+    //tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
     @ResponseBody
     public Object findAllProduct()
     {

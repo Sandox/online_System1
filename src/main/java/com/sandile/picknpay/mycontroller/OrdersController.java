@@ -27,6 +27,7 @@ public class OrdersController {
     
      // Saving user Order
     @RequestMapping(value = "/saveOrders", method = RequestMethod.POST)
+    //tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
     @ResponseBody
     public Orders saveOrder(@RequestBody Orders orders)
     {

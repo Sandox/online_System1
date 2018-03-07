@@ -47,7 +47,7 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                                            window.location = './login.html';
                                         }
                                 }).catch(function (error){
-                                    alert(error.data.error + ": User successfully registered..");
+                                    alert(error.data.error + ": User unsuccessfully registered..");
                                 });
                                 // Validation 
                            }else

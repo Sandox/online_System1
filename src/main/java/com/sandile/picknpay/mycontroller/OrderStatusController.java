@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+// has the capablity of handling multiple HTTP requests throughout the lifecycle of an application.
 @Controller
 @RequestMapping(value = "/orderStatus")
 public class OrderStatusController {

@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
+ //Special controller that does nothing more than adding the @Controller and @ResponseBody annotations
 @RestController
 @RequestMapping(value = "/address")
 public class AddressController {
     
+    //You use @Autowired annotation on properties to get rid of the setter methods.
     @Autowired
     private AddressService addServ;
     
     // Saving details for Shipping 
+    
+    //@RequestMapping ensures that HTTP requests to /saveAddress are mapped to the saveAddress() method.
     @RequestMapping(value = "/saveAddress", method = RequestMethod.POST)
     @ResponseBody
     public Address saveAddress(@RequestBody Address address)
@@ -35,6 +39,7 @@ public class AddressController {
     
     //Get shipping address based on order number
     @RequestMapping(value = "/findAddressByOrderNo/{orderno}", method = RequestMethod.GET)
+    //tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.
     @ResponseBody
     public ArrayList<Address> viewByOrderNo(@PathVariable int orderno)
     {
