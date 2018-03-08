@@ -30,23 +30,41 @@ picknpaySystem.controller("ProductController",function($scope,$http){
         {
            
             $http.delete('/product/deleteProduct/' + productId + '').then(function(response){
-               if(response.data !== 0)
+                
+                try
                 {
-                   alert("Product has been Deleted");
+                    if(response.data !== 0)
+                    {
+                         alert("Product has been Deleted");
+                    }
                 }
-            }).catch(function (error){
-                alert(error.data.message);
-            }); 
+                catch(error){
+                    
+                    alert("Failed to delete the selected product");; 
+                }
+                
+            })
+                     
         };
         
         // Find Product based on a Product ID  
         $scope.findProductById = function (productId)
         {
            $http.get('/product/findProductById/' + productId + '').then(function (response) {
-            $scope.product = response.data;
-           }).catch(function (error){
-               alert(error.data.message);
-           });
+               
+              try
+              { 
+               if(product !== null){
+               $scope.product = response.data;
+               }
+           }
+           catch(error){
+               
+               alert("Failed to find the Product");;
+           }
+           
+           })
+           
        };
        
          // Update Products name or category type and price by retrieving the ProductID 
@@ -62,13 +80,19 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                     
                     $http.put('/product/updateProduct/' + productId + '/' + prodname + '/' + prodcategory + '/'+prodprice+'').then(function(response){
             
+                 try{
                         if(response.data !== 0)
                         {
                             alert("Product has been Updated");
                         }
-                    }).catch(function (error){
-                        alert(error.data.message);
-                    }); 
+                    }
+                    catch(error){
+                        
+                         alert("Could notsave the edited product");
+                    }
+                    
+                    })
+                                     
                 }else
                 {
                     alert("Enter Product Price...");
@@ -138,13 +162,17 @@ if(myproduct.prodprice !== undefined)
            {
            $http.post('/product/saveProduct',myproduct).then(function(response){
 
+           try{
              if(response.data.pID !== 0)
             {
            alert("Product is successfully added Added...");
         }
-     }).catch(function(error){
-   alert(error.data.message);
- });
+           }
+           catch(error){
+               alert("Product could not be added");
+           }
+     })
+   
   // expectations for creating the new product
     }else{
    alert("Select Product Category...");

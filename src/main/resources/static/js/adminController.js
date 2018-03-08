@@ -1,9 +1,7 @@
 var picknpaySystem = angular.module("myApp",['ngRoute']);
-picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvider) {
+picknpaySystem.config(["$routeProvider",function($routeProvider) {
 
 }]);
-
-
 
 picknpaySystem.controller("RegisterController",['$scope','$http',function($scope,$http){
         
@@ -39,17 +37,24 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                             if(user.password !== undefined)
                             {
            //$http is a service function which takes a single argument and used to generate an HTTP request and returns a promise.
-                                $http.post('/user/register',user).then(function(response) {
+           $http.post('/user/register',user).then(function(response) {
                                         
-                                        if(response.data.userID !== 0)
-                                        {
-                                           alert("User is registered successfully...");
-                                           window.location = './login.html';
-                                        }
-                                }).catch(function (error){
-                                    alert(error.data.error + ": User unsuccessfully registered..");
-                                });
-                                // Validation 
+                     try { 
+        if(response.data.userID !== 0){
+            
+            alert("User is registered successfully...");
+             window.location = './login.html';
+        } 
+        
+    }
+    catch(error){
+        
+        error.data.error + ": User unsuccessfully registered..";
+        
+    }                             
+                                    
+      })
+        // Validates if the user has inserted the fields  
                            }else
                             {
                                 alert("Enter User Password...");
@@ -88,35 +93,32 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                         "role":role
                     };
                     
-            if(myExternals.name !== undefined)
-            {
-                if(myExternals.surname !== undefined)
-                {
-                  if(myExternals.mobile !== undefined)
-                        {
-                            if(myExternals.password !== undefined)
-                            {
+          
                              
-                                $http.post('/user/register',user).then(function(response) {
+           $http.post('/user/register',myExternals).then(function(response) {
                                         
-                                        if(response.data.userID !== 0)
-                                        {
-                                           alert("User is successfully registered...");
-                                           window.location = './login.html';
-                                        }
-                                }).catch(function (error){
-                                    alert(error.data.error + ": User Email address has been taken..");
-                                });
+                                             try { 
+        if(response.data.userID !== 0){
+            
+            alert("User is registered successfully...");
+             window.location = './login.html';
+        } 
+        
+        }
+        catch(error){
+        
+        error.data.error + ": Admin failed to successfilly register external users..";
+        
+         }
+                                        
+                                        
+                                        
+                                })
                            }
                             
                         }
-                    }
-            }
-                    
-       };
-       
-       
-}]);
+         
+]);
 
 // Login Controller
 picknpaySystem.controller("LoginController",function($scope,$http){
@@ -135,7 +137,11 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                 {
                     var userId = 0;
                    $http.get('/user/login/'+ username + '/'+ password + '').then(function(response){
-                               if(response.data.role === "customer")
+                               
+                       
+                       
+                               try{ if(response.data.role === "customer")
+                               
                                {
                                   userId = response.data.userID;
                                   window.location = './customerHomePage.html?userId=' + userId;
@@ -144,7 +150,8 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                                  userId = response.data.userID;
                                  window.location = './adminHomePage.html?userId=' + userId;
                                }
-                                 else if(response.data.role === "supplier")
+                               
+                              else if(response.data.role === "supplier")
                                {
                                   userId = response.data.userID;
                                   window.location = './supplierHomePage.html?userId=' + userId;
@@ -153,16 +160,21 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                                  userId = response.data.userID;
                                  window.location = './driverHomePage.html?userId=' + userId;
                                }
-		        }).catch(function(error){
-                            alert(error.data.message);
-                        });
+                               
+                       }
+                       catch(error){
+                           
+                            error.data.error + ": Sorry your details are not found..";
+                       }
+		        })
+                              
                 }else
                 {
-                   alert("Enter Password...");
+                   alert("Enter Your user password...");
                 }
             }else
             {
-               alert("Enter Username...");
+               alert("Enter Your user email...");
             }
          };      
 });

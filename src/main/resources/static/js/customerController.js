@@ -10,7 +10,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
     window.location.search.replace(/\?/,'').split('&').map(function(o){ cusData[o.split('=')[0]]= o.split('=')[1];});
     var userId = cusData.userId;
     
-    //$http.get Requests data from all users in the database
+    //$http.get Requests data from all users using the id in the database
     $http.get('/user/findUserByUserId/' + userId + '').then(function (dolist) {
         $scope.users = dolist.data;
         
@@ -50,7 +50,10 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
        $scope.CartAmount = 0.0;
        $scope.addToCart = function(myproduct)
        {
+          //checks the products in the cart using the product ID 
           var checking = checkProductsInCart(myproduct.productID);
+          // checks if the products in the cart is 
+          try{
           if(checking === null)
            {
                amount = 1 * myproduct.price;
@@ -75,6 +78,11 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
              }
             
             checking.totalAmount = totalAmount;
+          }
+          }
+          catch(error){
+              
+               error.data.error + ": failed to insert your cart items";
           }
             
             var totalAmount = 0.0;
@@ -151,7 +159,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
            
        };
        
-
+       //finds / requests all the types of address like: Home delivery and Office Delivery
          $http.get('/addressTypes/findAllAddressTypes').then(function(response){
                 $scope.addressTypes = response.data;
 	 });
@@ -173,6 +181,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
              var cardHolder = $scope.cardHolder;
              var bankName = $scope.bankName;
              
+             //user must insert this required field
              if(cardNo !== undefined)
              {
                 if(cardHolder !== undefined)
@@ -181,147 +190,202 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                     {
     $http.get('/bank/findBankAccount/' + cardNo + '/'+ cardHolder + '/' + bankName).then(function(response){
                             
-                $scope.banking = response.data;
+    $scope.banking = response.data;
                           
-                    if($scope.banking.bankID !== undefined)
-                            {
-                                var bankAmount = $scope.banking.balance;
-                                var bankBalance = 0.0;
-                                var cardAmount = $scope.CartAmount;
-                                var bankCardNo = $scope.banking.cardno;
-                                var bankId = $scope.banking.bankID;
+    if($scope.banking.bankID !== undefined)
+       {
+         var bankAmount = $scope.banking.balance;
+         var bankBalance = 0.0;
+         var cartAmount = $scope.CartAmount;
+         var bankCardNo = $scope.banking.cardno;
+         var bankId = $scope.banking.bankID;
 
-                                if(bankAmount < cardAmount)
-                                {
-                                  alert("insufficient Funds in your Bank Account!! Order can not be Processed...");
-                                }else{
+        if(bankAmount < cartAmount)
+            {
+            alert("insufficient Funds in your Bank Account!! Order can not be Processed...");
+            }
+            else{
 
-                                    bankBalance = bankAmount - cardAmount;
-                                    $http.put('/bank/updateBankBalance/' +cardNo+ '/' +bankBalance+ '').then(function(response){
+              bankBalance = bankAmount - cartAmount;
+                 //used to update existing bank balance in server based on the request mapping
+            $http.put('/bank/updateBankBalance/' +cardNo+ '/' +bankBalance+ '').then(function(response){
                                     
-                                    }).catch(function (error){
-                                        alert(error.data.message);
-                                    });; 
+            }).catch(function (error){
+              alert(error.data.message);
+    }); 
 
-                                    var minNumber = 0; // The minimum number you want
-                                    var maxNumber = 500; // The maximum number you want
-                                    var randomnumber = Math.floor(Math.random() * (maxNumber + 1) + minNumber);
-                                    var orderno = randomnumber + bankCardNo + randomnumber +  bankId;
+      var minNumber = 0; // The minimum number you want
+      var maxNumber = 5000; // The maximum number you want
+       var randomnumber = Math.floor(Math.random() * (maxNumber + 1) + minNumber);
+        var orderno = randomnumber + bankCardNo + randomnumber +  bankId;
 
-                                    var address = {
-                                        "orderno": orderno,
-                                        "name": $scope.name,
-                                        "surname": $scope.surname,
-                                        "email":$scope.email,
-                                        "addresstype": $scope.addressType,
-                                        "contacts": $scope.contacts,
-                                        "street": $scope.street,
-                                        "city":$scope.city,
-                                        "province":$scope.provinceName};
-                                   
-                                     
-                                     if(address.name !== undefined)
-                                     {
-                                        if(address.surname !== undefined)
-                                        {
-                                            if(address.email !== undefined)
-                                            {
-                                                if(address.addresstype !== undefined)
-                                                {
-                                                    if(address.contacts !== undefined)
-                                                    {
-                                                        if(address.street !== undefined)
-                                                        {
-                                                            if(address.city !== undefined)
-                                                            {
-                                                                if(address.province !== undefined)
-                                                                {
-                                                                    for(var x = 0; x < $scope.cartItems.length; x++){
+          var address = {
+             "orderno": orderno,
+             "name": $scope.name,
+             "surname": $scope.surname,
+             "email":$scope.email,
+             "addresstype": $scope.addressType,
+             "contacts": $scope.contacts,
+              "street": $scope.street,
+              "city":$scope.city,
+              "province":$scope.provinceName};
+                  
+                
+//required fields for the address used for delivery
+if(address.name !== undefined)
+  {
+   if(address.surname !== undefined)
+   {
+   if(address.email !== undefined)
+  {
+   if(address.addresstype !== undefined)
+   {
+   if(address.contacts !== undefined)
+    {
+   if(address.street !== undefined)
+    {
+   if(address.city !== undefined)
+     {
+     if(address.province !== undefined)
+       {
+           
+      for(var x = 0; x < $scope.cartItems.length; x++){
 
-                                                                    var name = $scope.cartItems[x].name;
-                                                                    var quantity = $scope.cartItems[x].quantity;
-                                                                    var productId = $scope.cartItems[x].productId;
-                                                                    var price =  $scope.cartItems[x].price;
-                                                                    var category = $scope.cartItems[x].category;
-                                                                    var image= $scope.cartItems[x].image;
+      var name = $scope.cartItems[x].name;
+     var quantity = $scope.cartItems[x].quantity;
+      var productId = $scope.cartItems[x].productId;
+     var price =  $scope.cartItems[x].price;
+     var category = $scope.cartItems[x].category;
+     var image= $scope.cartItems[x].image;
                                                                   
-                                                                      var orderData = {
-                                                                      "orderstatus": "New Order",
-                                                                      "orderamount": $scope.CartAmount ,
-                                                                      "userID": userId,
-                                                                      "orderno": orderno,
-                                                                      "delivarydate":$scope.date,
-                                                                      "name":name,
-                                                                      "quantity":quantity,
-                                                                      "productID":productId,
-                                                                      "price":price,
-                                                                      "category":category,
-                                                                      "image":image
-                                                                  };
+     var orderData = {
+         
+        
+       "orderstatus": "New Order",
+       "orderamount": $scope.CartAmount ,
+       "userID": userId,
+        "orderno": orderno,
+        "delivarydate":$scope.date,
+        "name":name,
+        "quantity":quantity,
+        "productID":productId,
+        "price":price,
+        "category":category,
+        "image":image
+      };
+                                                                    
+//saving the customers orders  
+$http.post('/orders/saveOrders',orderData).then( function (response){
 
-                                                                 
-                                                                  $http.post('/orders/saveOrders',orderData).then( function (response){
+    try{ if(orderData !== null)
+        {
+                                                                          
+          alert("Order Processed...");
+        }
+       
+     }
                                                                       
-                                                                  }).catch(function (error){
-                                                                      alert(error.data.message);
-                                                                  });
-                                                                }
-                                                                $http.post('/address/saveAddress',address).then(function(response){
-
-                                                                 }).catch(function (error){
-                                                                      alert(error.data.message);
-                                                                  });
-                                                                     alert("Order Processed...");
-                                                                     alert("Order Number:..." + orderno);
-                                                                }else{
-                                                                    alert("Select Recipient Province...");
-                                                                }
-
-                                                            }else{
-                                                                alert("Enter Recipient City...");
-                                                            }
-
-                                                        }else{
-                                                            alert("Enter Recipient Street Name...");
-                                                        }
-
-                                                    }else{
-                                                        alert("Enter Recipient Contacts Numbers...");
-                                                    }
-
-                                                }else{
-                                                    alert("Select Recipient Type...");
-                                                }
-
-                                            }else{
-                                                alert("Enter Recipient Email...");
-                                            }
-
-                                        }else{
-                                            alert("Enter Recipient Surname...");
-                                        }
-
-                                     }else{
-                                         alert("Enter Recipient Name...");
-                                     }
-                                }
-                             }            
-
-                        }).catch(function (error){
-                            alert(error.data.message);
-                        });
-                    }else
-                    {
-                        alert("Select Bank Name!!!");
-                    }
-                }else
-                {
-                    alert("Enter Your Card Holder Namde!!!");
+    catch(error){
+                error.data.error + ": Your Order cannot be Proceed ";  
                 }
-             }else
-             {
-                 alert("Enter Your Card Number!!!");
-             }
+                                                                   
+    })
+                                                              
+                                                                    
+     }
+     
+ // Tracking order for registered customers 
+  $scope.trackOrder = function (orderNo)
+         {
+             try{ if(orderNo !== undefined)
+                 
+          { 
+                $http.get('/orders/findByOrderNo/' + orderNo + '').then(function(response){
+                  
+                   $scope.ordersIn = response.data;
+                })
+  
+      //requests / fetchs the address by the order number
+     $http.get('/address/findAddressByOrderNo/' + orderNo + '').then(function(response){
+                  
+         $scope.delivary = response.data;
+         })
+      
+        }
+        }
+        catch(error){
+            
+            alert("Enter Order Number...!!!");
+        }
+            
+     
+       };
+ 
+   
+//saving the customer address for the delivery
+
+$http.post('/address/saveAddress',address).then(function(response){
+     try{ if(address !== null)
+         {
+            alert("Order Number:..." + orderno);
+         }
+        }
+                                                                 
+       catch(error){
+                 error.data.error + ": There is a problem with your address";
+                    }
+})
+                                                            
+}else{
+    alert("Select Recipient Province...");
+     }
+
+  }else{
+   alert("Enter Recipient City...");
+    }
+
+}else{
+      alert("Enter Recipient Street Name...");
+    }
+
+}else{
+    alert("Enter Recipient Contacts Numbers...");
+   }
+
+ }else{
+    alert("Select Recipient Type...");
+    }
+
+    }else{
+     alert("Enter Recipient Email...");
+     }
+
+  }else{
+       alert("Enter Recipient Surname...");
+       }
+
+   }else{
+      alert("Enter Recipient Name...");
+     }
+ }
+}            
+
+  })
+   }else
+     {
+        alert("Select Bank Name!!!");
+    }
+}else
+     {
+       alert("Enter Your Card Holder Namde!!!");
+      }
+      
+      }else
+       {
+        alert("Enter Your Card Number!!!");
+        }
+        
+        
      };
   
 });
