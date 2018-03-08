@@ -3,7 +3,9 @@ picknpaySystem.config(["$routeProvider",function($routeProvider) {
 
 }]);
 
-// Customer Controller 
+//************************************CUSTOMER CONTROLLER***********************************************
+
+
 picknpaySystem.controller("CustomerController", function ($scope, $http){
    $http.defaults.headers.post["Content-Type"] = "application/json";  
     var cusData = {};
@@ -44,7 +46,9 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                 evnt.currentTarget.className += " active";
              });
            };
-           
+         
+ //*************Adding to Cart and Payment and Making a Order Process Below**********************************
+    
        // Add Product To Cart  
        $scope.cartItems = [];
        $scope.CartAmount = 0.0;
@@ -94,7 +98,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
             $scope.CartAmount = totalAmount;
       };
        
-       // Check if product exist in the database  
+     // Check if product the are products in the Cart function
       function checkProductsInCart(id){
          for(var i=0; i < $scope.cartItems.length; i++){
            if($scope.cartItems[i].productId === id){
@@ -104,6 +108,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
         return null;
      }
 
+//Removing the Items on the Cart Funcion 
        $scope.removeCartItem = function()
        {
             var index = $scope.cartItems.indexOf($scope.cartItems.length);
@@ -159,22 +164,22 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
            
        };
        
-       //finds / requests all the types of address like: Home delivery and Office Delivery
+       //fecths the addresstypes through the addressController which has the method and uses the services url to get the methods
          $http.get('/addressTypes/findAllAddressTypes').then(function(response){
                 $scope.addressTypes = response.data;
 	 });
          
-      
+      //uses the services url to get the methods and create a scope of the object
          $http.get('/province/findAllProvinces').then(function(response){
               $scope.provinces = response.data;
 	 });
 
-         
+         //uses the services url to get the methods and create a scope of the object
          $http.get('/bankNames/findAllBankNames').then(function(response){
             $scope.bankNames = response.data;
 	 });
          
-        
+//*****************************************************PAYMENT PROCESS BELOW*********************************************************************
          $scope.payement = function ()
          {
              var cardNo = $scope.cardNo;
@@ -187,7 +192,10 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                 if(cardHolder !== undefined)
                 {
                     if(bankName !== undefined)
-                    {
+   
+                     {
+                         
+    //uses the services url to get the methods and create a scope of the object
     $http.get('/bank/findBankAccount/' + cardNo + '/'+ cardHolder + '/' + bankName).then(function(response){
                             
     $scope.banking = response.data;
@@ -273,8 +281,10 @@ if(address.name !== undefined)
         "category":category,
         "image":image
       };
-                                                                    
-//saving the customers orders  
+       
+//*************************ORDER PROCESS BELOW*************************************//*****************                                            
+                                            
+//angularjs gets the request mapping from the controller and uses the controller which autowires the service-class  
 $http.post('/orders/saveOrders',orderData).then( function (response){
 
     try{ if(orderData !== null)
@@ -289,7 +299,7 @@ $http.post('/orders/saveOrders',orderData).then( function (response){
                 error.data.error + ": Your Order cannot be Proceed ";  
                 }
                                                                    
-    })
+    });
                                                               
                                                                     
      }
@@ -303,13 +313,13 @@ $http.post('/orders/saveOrders',orderData).then( function (response){
                 $http.get('/orders/findByOrderNo/' + orderNo + '').then(function(response){
                   
                    $scope.ordersIn = response.data;
-                })
+                });
   
       //requests / fetchs the address by the order number
      $http.get('/address/findAddressByOrderNo/' + orderNo + '').then(function(response){
                   
          $scope.delivary = response.data;
-         })
+         });
       
         }
         }
@@ -323,7 +333,6 @@ $http.post('/orders/saveOrders',orderData).then( function (response){
  
    
 //saving the customer address for the delivery
-
 $http.post('/address/saveAddress',address).then(function(response){
      try{ if(address !== null)
          {
@@ -334,7 +343,7 @@ $http.post('/address/saveAddress',address).then(function(response){
        catch(error){
                  error.data.error + ": There is a problem with your address";
                     }
-})
+});
                                                             
 }else{
     alert("Select Recipient Province...");
@@ -370,7 +379,7 @@ $http.post('/address/saveAddress',address).then(function(response){
  }
 }            
 
-  })
+  });
    }else
      {
         alert("Select Bank Name!!!");

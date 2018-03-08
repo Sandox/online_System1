@@ -3,73 +3,14 @@ picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvi
 
 }]);
 
-
-//Setting new Password  
-picknpaySystem.controller("ForgotPasswordController",function($scope,$http){
-    $http.defaults.headers.post["Content-Type"] = "application/json";  
-   
-    
-        //users email address to look for the details and get the password
-        $scope.forgotPassword = function ()
-        {
-           var email =  $scope.username;
-           try{
-               
-            if(username !== undefined)
-            {
-               
-                $http.get('/user/forgotPassword/' + email + '').then( function (response){
-                    $scope.user = response.data;
-                    window.location = './newPassword.html?email=' + email;
-                })
-           
-            }
-        }
-        catch(error){
-             alert("Please re-enter your email Correctly");
-        }
-           
-       };   
-       
-     //Customer Creates new password and override the old one
-       $scope.newPassword = function (){
-           var password = $scope.password;
-           var newPassword = $scope.password1;
-            var Data = {};
-            window.location.search.replace(/\?/,'').split('&').map(function(o){ Data[o.split('=')[0]]= o.split('=')[1];});
-            var email = Data.email;
-   
-        try
-        {
-           if(password === newPassword)
-           {
-               $http.put('/user/newPassword/' + password + '/' +email+'').then(function(response){
-                    alert("New customer Password has been created...");
-                    window.location = './login.html';
-                    
-               })
-                  
-            }
-         }
-        catch(error)
-            {
-             alert(error.data.message);   
-            }
-        
-        };
-});
-
-
-
-
-
-//Category Controller
+//***************************************************CATEGORY CONTROLLER**********************************************************
 picknpaySystem.controller("CategoryController",function($scope,$http){
    
     $http.defaults.headers.post["Content-Type"] = "application/json";  
 
           
-        //save the caegory
+//*******************************************ADMIN WORKING WITH CATEGORY FUNCTIONS BELOW******************************************
+//save the caegory
         $scope.saveCategory = function ()
         {
            var cat = {
@@ -85,7 +26,7 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
                 {
                     alert("Category Added...");
                 }
-            })
+            });
             
           }
       }
@@ -111,7 +52,7 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
                     {
                          alert("Category has been Deleted");
                     }
-                })
+                });
                  
             }
         }
@@ -124,12 +65,15 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
 
 
 
-//Order controller
+//**************************************************************ORDER CONTROLLER*******************************************
 picknpaySystem.controller("OrderController",function($scope,$http){
    
     $http.defaults.headers.post["Content-Type"] = "application/json";  
+     //$http requests from the server and returns json data 
     
- //requests or finds the orders from the orders table in the database
+//***************************************************FUNCTIONS WORKING WITH THE ORDERS BELOW********************************    
+    
+ //fecths the all the order through the ordersController which has the method and uses the services url to get the methods
      $http.get('/orders/findAllOrders').then(function(response){
                $scope.orders = response.data;
 
@@ -145,7 +89,8 @@ picknpaySystem.controller("OrderController",function($scope,$http){
          //Driver Update Status Order Using Order ID
          $scope.updateOrderStatus = function(orderId, orderStatus)
          {
-             //Every time a order is made it is New order bt defualt then driver changes the order after delivery 
+             
+ //*****************Every time a order is made it is New order bt defualt then driver changes the order after delivery 
              
              //updates existing order status 
              $http.put('/orders/updateOrderStatus/' + orderId + '/' + orderStatus + '').then(function(response){
@@ -160,7 +105,7 @@ picknpaySystem.controller("OrderController",function($scope,$http){
                 alert("Order Status failed to be updated");
             }
                 
-	 })
+	 });
             
          };
          
@@ -183,7 +128,7 @@ picknpaySystem.controller("OrderController",function($scope,$http){
                 
                  alert("Failed to delete the order");
             }
-            })
+            });
                     
          };
                

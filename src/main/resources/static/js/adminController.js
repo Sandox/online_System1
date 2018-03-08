@@ -3,6 +3,8 @@ picknpaySystem.config(["$routeProvider",function($routeProvider) {
 
 }]);
 
+//*****************************REGISTERATION PROCESS BELOW*******************************************
+
 picknpaySystem.controller("RegisterController",['$scope','$http',function($scope,$http){
         
         //$http.post Submits data to be processed
@@ -73,7 +75,8 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
             }
                     
        }; 
-       
+//***************************************METHOD FOR REGISTERING SUPPLIER AND DRIVER*****************************  
+        
        // Method for registering Driver and Supplier 
              $scope.registerUser = function (val)
         {
@@ -83,7 +86,7 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                 role = "driver";
             }
             
-           
+           //external users of the system
             var myExternals = {
                         "name" :$scope.myname,
                         "surname" :$scope.lastname,
@@ -113,12 +116,14 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                                         
                                         
                                         
-                                })
-                           }
+                                });
+                           };
                             
                         }
          
 ]);
+
+//**************************************LOGIN PROCESS BELOW******************************************************
 
 // Login Controller
 picknpaySystem.controller("LoginController",function($scope,$http){
@@ -140,7 +145,9 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                                
                        
                        
-                               try{ if(response.data.role === "customer")
+                               try
+                               {
+                                   if(response.data.role === "customer")
                                
                                {
                                   userId = response.data.userID;
@@ -166,7 +173,7 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                            
                             error.data.error + ": Sorry your details are not found..";
                        }
-		        })
+		        });
                               
                 }else
                 {
@@ -179,3 +186,61 @@ picknpaySystem.controller("LoginController",function($scope,$http){
          };      
 });
 
+
+//****************************************FORGOT PASSWORD PROCESS BELOW******************************************************
+
+picknpaySystem.controller("ForgotPasswordController",function($scope,$http){
+    $http.defaults.headers.post["Content-Type"] = "application/json";  
+   
+    
+        //users email address to look for the details and get the password
+        $scope.forgotPassword = function ()
+        {
+           var email =  $scope.username;
+           try{
+               
+            if(username !== undefined)
+            {
+               
+                $http.get('/user/forgotPassword/' + email + '').then( function (response){
+                    $scope.user = response.data;
+                    window.location = './newPassword.html?email=' + email;
+                });
+           
+            }
+        }
+        catch(error){
+             alert("Please re-enter your email Correctly");
+        }
+           
+       };   
+       
+ //*************************************Customer Creates new password and override the old one**********************
+    
+    
+       $scope.newPassword = function (){
+           var password = $scope.password;
+           var newPassword = $scope.password1;
+            var Data = {};
+            window.location.search.replace(/\?/,'').split('&').map(function(o){ Data[o.split('=')[0]]= o.split('=')[1];});
+            var email = Data.email;
+   
+        try
+        {
+           if(password === newPassword)
+           {
+               $http.put('/user/newPassword/' + password + '/' +email+'').then(function(response){
+                    alert("New customer Password has been created...");
+                    window.location = './login.html';
+                    
+               });
+                  
+            }
+         }
+        catch(error)
+            {
+             alert(error.data.message);   
+            }
+        
+        };
+});

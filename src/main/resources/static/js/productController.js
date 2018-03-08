@@ -3,14 +3,18 @@ picknpaySystem.config(["$routeProvider","$locationProvider",function($routeProvi
 
 }]);
 
+//***************************************************PRODUCT CONTROLLER************************************************
 picknpaySystem.controller("ProductController",function($scope,$http){
    
+   
     $http.defaults.headers.post["Content-Type"] = "application/json";  
+     //$http requests from the server and returns json data 
 
     var info = {};
     window.location.search.replace(/\?/,'').split('&').map(function(o){ info[o.split('=')[0]]= o.split('=')[1];});
     var userId = info.userId;
    
+   //fecths the all the user through the userController which has the method and uses the services url to get the methods
     $http.get('/user/findUserByUserId/' + userId + '').then(function (response) {
         $scope.user = response.data;
       });
@@ -20,7 +24,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
     });
         
         
- 
+//fecths the all the categories through the categoryController which has the method and uses the services url to get the methods 
         $http.get('/category/findAllCategories').then(function (response) {
         $scope.categories = response.data;
        });
@@ -43,7 +47,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                     alert("Failed to delete the selected product");; 
                 }
                 
-            })
+            });
                      
         };
         
@@ -63,7 +67,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                alert("Failed to find the Product");;
            }
            
-           })
+           });
            
        };
        
@@ -91,7 +95,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                          alert("Could notsave the edited product");
                     }
                     
-                    })
+                    });
                                      
                 }else
                 {
@@ -115,11 +119,13 @@ picknpaySystem.controller("AddProductController",function($scope,$http){
          });
      
        
-         // Admin Save Product
+//**************************************************Uploading a picture for a product**********************************************
           $scope.image = null;
             var imageCopy = null;
 		    var image = null;
-		    var handleImageSelect = function (evt)
+		    var handleImageSelect = function (evt)// FileList object
+
+    // files is a FileList of File objects. List some properties.
 		    {
 		        var files = evt.target.files;
 		        var file = files[0];
@@ -171,7 +177,7 @@ if(myproduct.prodprice !== undefined)
            catch(error){
                alert("Product could not be added");
            }
-     })
+     });
    
   // expectations for creating the new product
     }else{
