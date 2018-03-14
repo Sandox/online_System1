@@ -24,7 +24,7 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
                      
                 if(response.data.catcatID !== 0)
                 {
-                    alert("Category Added...");
+                    alert(response + "Category Added...");
                 }
             });
             
@@ -32,7 +32,7 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
       }
           catch(error){
               
-              alert("Enter Category Name");
+              alert(error + "Enter Category Name");
           }
             
          };  
@@ -50,14 +50,14 @@ picknpaySystem.controller("CategoryController",function($scope,$http){
                 
                     if(response.data !== 0)
                     {
-                         alert("Category has been Deleted");
+                         alert(response + "Category has been Deleted");
                     }
                 });
                  
             }
         }
         catch(error){
-             alert("Enter Category Name to be deleted...");
+             alert(error + "Enter Category Name to be deleted...");
         }
           
          };
@@ -90,7 +90,7 @@ picknpaySystem.controller("OrderController",function($scope,$http){
          $scope.updateOrderStatus = function(orderId, orderStatus)
          {
              
- //*****************Every time a order is made it is New order bt defualt then driver changes the order after delivery 
+ //*****************Every time a order is made it is a New order by defualt then driver changes the order after delivery 
              
              //updates existing order status 
              $http.put('/orders/updateOrderStatus/' + orderId + '/' + orderStatus + '').then(function(response){
@@ -98,11 +98,11 @@ picknpaySystem.controller("OrderController",function($scope,$http){
                 try{
                 if(response.data !== 0)
                 {
-                 alert("Order Status has been Updated");
+                 alert(response + "Order Status has been Updated");
                 }
             }
             catch(error){
-                alert("Order Status failed to be updated");
+                alert(error + "Order Status failed to be updated");
             }
                 
 	 });
@@ -121,12 +121,12 @@ picknpaySystem.controller("OrderController",function($scope,$http){
             {
                 if(response.data !== 0)
                 {
-                 alert("Order has been deleted");
+                 alert( response+ "Order has been deleted");
                 }
             }
             catch(error){
                 
-                 alert("Failed to delete the order");
+                 alert(error + "Failed to delete the order");
             }
             });
                     

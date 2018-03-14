@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsersService {
     
+    //You use @Autowired annotation on properties to get rid of the setter methods.
     @Autowired
     private UsersRepository myUser;
     

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/user")
 public class UsersController {
     
+    //You use @Autowired annotation on properties to get rid of the setter methods.
     @Autowired
     private UsersService uService;
   

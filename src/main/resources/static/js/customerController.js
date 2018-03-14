@@ -5,7 +5,6 @@ picknpaySystem.config(["$routeProvider",function($routeProvider) {
 
 //************************************CUSTOMER CONTROLLER***********************************************
 
-
 picknpaySystem.controller("CustomerController", function ($scope, $http){
    $http.defaults.headers.post["Content-Type"] = "application/json";  
     var cusData = {};
@@ -86,7 +85,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
           }
           catch(error){
               
-               error.data.error + ": failed to insert your cart items";
+               alert(error + ": failed to insert your cart items");
           }
             
             var totalAmount = 0.0;
@@ -218,7 +217,7 @@ picknpaySystem.controller("CustomerController", function ($scope, $http){
                  //used to update existing bank balance in server based on the request mapping
             $http.put('/bank/updateBankBalance/' +cardNo+ '/' +bankBalance+ '').then(function(response){
                                     
-            }).catch(function (error){
+            }).catch(function(error){
               alert(error.data.message);
     }); 
 
@@ -296,7 +295,7 @@ $http.post('/orders/saveOrders',orderData).then( function (response){
      }
                                                                       
     catch(error){
-                error.data.error + ": Your Order cannot be Proceed ";  
+                alert(error+ ": Your Order cannot be Proceed ");  
                 }
                                                                    
     });
@@ -341,7 +340,7 @@ $http.post('/address/saveAddress',address).then(function(response){
         }
                                                                  
        catch(error){
-                 error.data.error + ": There is a problem with your address";
+                 alert(error + ": There is a problem with your address");
                     }
 });
                                                             

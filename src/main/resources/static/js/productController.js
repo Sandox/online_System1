@@ -18,7 +18,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
     $http.get('/user/findUserByUserId/' + userId + '').then(function (response) {
         $scope.user = response.data;
       });
-    // Fetch All Products that are aviable 
+ // Fetch All Products that are aviable 
     $http.get('/product/findAllProducts').then(function (response) {
        $scope.products = response.data;
     });
@@ -29,7 +29,8 @@ picknpaySystem.controller("ProductController",function($scope,$http){
         $scope.categories = response.data;
        });
         
-     // Method to deletes the product using the productID
+ 
+//******************************************** Method to deletes the product using the productID****************************************
         $scope.deleteProduct = function (productId)
         {
            
@@ -39,19 +40,19 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                 {
                     if(response.data !== 0)
                     {
-                         alert("Product has been Deleted");
+                         alert(response+"Product has been Deleted");
                     }
                 }
                 catch(error){
                     
-                    alert("Failed to delete the selected product");; 
+                    alert(error + "Failed to delete the selected product");; 
                 }
                 
             });
                      
         };
         
-        // Find Product based on a Product ID  
+//********************************************************** Find Product based on a Product ID*************************************************  
         $scope.findProductById = function (productId)
         {
            $http.get('/product/findProductById/' + productId + '').then(function (response) {
@@ -64,14 +65,14 @@ picknpaySystem.controller("ProductController",function($scope,$http){
            }
            catch(error){
                
-               alert("Failed to find the Product");;
+               alert(error + "Failed to find the Product");;
            }
            
            });
            
        };
        
-         // Update Products name or category type and price by retrieving the ProductID 
+ //************************************* Update Products name or category type and price by retrieving the ProductID****************************** 
         $scope.editProduct = function (productId)
         {
             var prodname = $scope.product.name;
@@ -87,12 +88,12 @@ picknpaySystem.controller("ProductController",function($scope,$http){
                  try{
                         if(response.data !== 0)
                         {
-                            alert("Product has been Updated");
+                            alert (response + "Product has been Updated");
                         }
                     }
                     catch(error){
                         
-                         alert("Could notsave the edited product");
+                         alert(error + "Could not save the edited product");
                     }
                     
                     });
@@ -107,7 +108,7 @@ picknpaySystem.controller("ProductController",function($scope,$http){
         };
 });
 
-
+//****************************************************ADMIN ADDING PRODUCT PROCESS BELOW*****************************************
 picknpaySystem.controller("AddProductController",function($scope,$http){
    
     $http.defaults.headers.post["Content-Type"] = "application/json";  
@@ -150,6 +151,7 @@ picknpaySystem.controller("AddProductController",function($scope,$http){
 		        alert('The File APIs are not fully supported in this browser.');
 		    }
       
+//****************************************************ADMIN ADDING PRODUCT METHOD*****************************************      
       //method for creating the product
         $scope.create = function ()
         {
@@ -159,7 +161,7 @@ picknpaySystem.controller("AddProductController",function($scope,$http){
                         prodprice : $scope.price,
                         image : $scope.image
                   };
-         
+  // user must fill the defualt fields        
 if(myproduct.prodname !== undefined)
 {
 if(myproduct.prodprice !== undefined)
@@ -171,11 +173,11 @@ if(myproduct.prodprice !== undefined)
            try{
              if(response.data.pID !== 0)
             {
-           alert("Product is successfully added Added...");
+           alert(response + "Product is successfully added Added...");
         }
            }
            catch(error){
-               alert("Product could not be added");
+               alert(error + "Product could not be added");
            }
      });
    

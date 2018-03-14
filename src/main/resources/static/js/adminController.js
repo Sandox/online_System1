@@ -44,18 +44,18 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                      try { 
         if(response.data.userID !== 0){
             
-            alert("User is registered successfully...");
+            alert(response + "User is registered successfully...");
              window.location = './login.html';
         } 
         
     }
     catch(error){
         
-        error.data.error + ": User unsuccessfully registered..";
+        alert(error + "User unsuccessfully registered");
         
     }                             
                                     
-      })
+      });
         // Validates if the user has inserted the fields  
                            }else
                             {
@@ -103,23 +103,23 @@ picknpaySystem.controller("RegisterController",['$scope','$http',function($scope
                                              try { 
         if(response.data.userID !== 0){
             
-            alert("User is registered successfully...");
+            alert(response + "User is registered successfully...");
              window.location = './login.html';
         } 
         
         }
         catch(error){
         
-        error.data.error + ": Admin failed to successfilly register external users..";
+        (error + "Admin failed to successfilly register external users");
         
          }
                                         
                                         
                                         
-                                });
-                           };
+      });
+   };
                             
-                        }
+ }
          
 ]);
 
@@ -171,7 +171,7 @@ picknpaySystem.controller("LoginController",function($scope,$http){
                        }
                        catch(error){
                            
-                            error.data.error + ": Sorry your details are not found..";
+                            (error + " Sorry your details are not found");
                        }
 		        });
                               
@@ -210,7 +210,7 @@ picknpaySystem.controller("ForgotPasswordController",function($scope,$http){
             }
         }
         catch(error){
-             alert("Please re-enter your email Correctly");
+             alert(error + "Please re-enter your email Correctly");
         }
            
        };   
@@ -239,7 +239,7 @@ picknpaySystem.controller("ForgotPasswordController",function($scope,$http){
          }
         catch(error)
             {
-             alert(error.data.message);   
+             alert(error + "Please passwords dont match ");  
             }
         
         };
